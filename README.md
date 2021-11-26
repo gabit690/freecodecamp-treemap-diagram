@@ -12,4 +12,5 @@ You can check the project [here][web].
 
 **Profession:** PROFESSION
 
+[fcc]: https://www.freecodecamp.org/
 [web]: ???

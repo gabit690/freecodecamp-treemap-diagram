@@ -3,8 +3,9 @@
     padding: 0;
 }
 
-header h1 {
+header h1, header h2 {
     text-align: center;
+    text-transform: capitalize;
 }
 
 footer {
@@ -15,4 +16,13 @@ footer {
 
 footer p {
     text-align: center;
+}
+
+svg {
+    display: block;
+    width: 1000px;
+    height: 700px;
+    margin: 20px auto;
+    outline: 3px solid #aaa;
+    box-shadow: -3px 3px 5px 3px #aaa;
 }

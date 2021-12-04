@@ -18,10 +18,10 @@ footer p {
     text-align: center;
 }
 
-svg {
+#tiles-container {
     display: block;
-    width: 1000px;
-    height: 700px;
+    width: 1400px;
+    height: 600px;
     margin: 20px auto;
     outline: 3px solid #aaa;
     box-shadow: -3px 3px 5px 3px #aaa;

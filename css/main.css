@@ -26,3 +26,9 @@ footer p {
     outline: 3px solid #aaa;
     box-shadow: -3px 3px 5px 3px #aaa;
 }
+
+#legend {
+    width: 1400px;
+    display: block;
+    margin: auto;
+}

@@ -10,6 +10,15 @@ const createTreemap = (dataset = 0, width = 0, height = 0) => {
   return root;
 }
 
+const createCells = (container = {}, leaves = []) => {
+  return container.selectAll('g')
+                    .data(leaves)
+                    .enter()
+                    .append('g')
+                    // .attr('class', 'group')
+                    .attr('transform', d => 'translate(' + d.x0 + ',' + d.y0 + ')');
+}
+
 const CATEGORY_OF_MOVIES = [
   "Action", 
   "Drama", 
@@ -25,6 +34,22 @@ const getColor = (category = "") => {
   .domain(CATEGORY_OF_MOVIES)
   .range(["#1779ba", "#d2691e", "#3adb76", "#ffae00", "#cc4b37", "#e3ff00", "#9370db"]);
   return ordinalScale(category);
+}
+
+const addMouseMoveEvent = (event = {}, data = {}) => {
+  d3.select("#tooltip")
+    .attr("data-value", data.value)
+    .style("opacity", 1)
+    .style("left", `${event.x + 20}px`)
+    .style("top", `${event.y - 40}px`)
+    .html(
+      `Name: ${data.name}<br>Category: ${data.category}<br>Value: ${data.value}`
+    );
+}
+
+const addMouseOutEvent = () => {
+  d3.select("#tooltip")
+    .style("opacity", "0.0");
 }
 
 export default {
@@ -44,12 +69,7 @@ export default {
   getHeight: (element = {}) => Number(element.style("height").slice(0,-2)),
   addDataTiles: (container = {}, dataset = {}, width = 0, height = 0) => {
     let root = createTreemap(dataset, width, height);
-    let cells = container.selectAll('g')
-                          .data(root.leaves())
-                          .enter()
-                          .append('g')
-                          .attr('class', 'group')
-                          .attr('transform', d => 'translate(' + d.x0 + ',' + d.y0 + ')');
+    let cells = createCells(container, root.leaves());
     cells.append('rect')
           .attr('id', d => d.data.id)
           .attr('class', 'tile')
@@ -59,6 +79,9 @@ export default {
           .attr('data-category', d => d.data.category)
           .attr('data-value', d => d.data.value)
           .attr('fill', d => getColor(d.data.category));
+    d3.selectAll("g")
+        .on("mousemove", (event, d) => addMouseMoveEvent(event, d.data))
+        .on("mouseout", addMouseOutEvent);
     cells.append('text')
           .attr('class', 'tile-text')
           .selectAll('tspan')
@@ -70,11 +93,10 @@ export default {
           .attr("font-size", "14px")
           .text(d => d);
   },
-  addMovieCategoryLegend: (element = "body", coordinateX = 0, coordinateY = 0) => {
+  addMovieCategoryLegend: (element = "body") => {
     let legendContainer = d3.select(element)
                               .append("svg")
-                              .attr("id", "legend")
-                              .attr("transform", `translate(${coordinateX}, ${coordinateY})`);
+                              .attr("id", "legend");
                               
     legendContainer.selectAll("rect")
                     .data(CATEGORY_OF_MOVIES)
@@ -94,5 +116,11 @@ export default {
                     .append("text")
                     .attr("transform", (d, i) => `translate(${(i * 200) + 35}, ${30})`)
                     .text(d => d);
+  },
+  addTooltip: () => {
+    d3.select("main")
+        .append("div")
+        .attr("id", "tooltip")
+        .attr("data-value", "");
   }
 }

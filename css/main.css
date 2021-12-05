@@ -32,3 +32,14 @@ footer p {
     display: block;
     margin: auto;
 }
+
+#tooltip {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    padding: 10px;
+    background-color: #FFFFCC;
+    opacity: 0.0;
+    text-align: center;
+    border-radius: 10px;
+}

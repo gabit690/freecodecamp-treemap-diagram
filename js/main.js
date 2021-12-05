@@ -9,7 +9,8 @@ const showTreemapDiagram = (movieSalesUrl = "") => {
                             const WIDTH = builder.getWidth(tilesSvg);
                             const HEIGHT = 600;
                             builder.addDataTiles(tilesSvg, data, WIDTH, HEIGHT);
-                            builder.addMovieCategoryLegend("main", 0, 0);
+                            builder.addMovieCategoryLegend("main");
+                            builder.addTooltip();
                         });
 }
 
